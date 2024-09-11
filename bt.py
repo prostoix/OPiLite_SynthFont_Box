@@ -5,14 +5,17 @@ import json
 from telnetlib import Telnet
 
 with open('inst.JSON') as f:
-    templates = json.load(f)
+    piano = json.load(f)
 
-print(templates)
+#print(templates)
 
-for section, commands in templates.items():
-    print(section)
-    print('\n'.join(commands))
+#for section, commands in templates.items():
+#    print(section)
+#    print('\n'.join(commands))
 
+for (i in piano.inst) {
+    print(piano.inst[i].name)
+}
 
 fs = Telnet("localhost",9800, 10)
 #fs.write('noteon 1 25 127\n'.encode('ascii'))
