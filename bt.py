@@ -47,13 +47,10 @@ def oled_count(count):
     return oled_count
 
 def walker(step);
-    match step:
-        case "up":
-            count += 1
-        case "down":
-            count -= 1
-        if count > count_inst: count = 0
-        if count < 0: count = count_inst
+    if step == "up": count += 1
+    else: count -= 1
+    if count > count_inst: count = 0
+    if count < 0: count = count_inst
     return walker
 
 
