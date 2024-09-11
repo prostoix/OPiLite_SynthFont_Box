@@ -37,7 +37,7 @@ GPIO.setup(29, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 GPIO.setup(31, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 GPIO.setup(33, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
-count = 0
+count = 0 #счетчик
 
 def oled_count(count):
     with canvas(device) as draw:
@@ -48,7 +48,7 @@ def oled_count(count):
 
 def walker(step):
     if step == "up": count += 1
-    else: count -= 1
+    if step == "down": count -= 1
     if count > count_inst: count = 0
     if count < 0: count = count_inst
     return walker
