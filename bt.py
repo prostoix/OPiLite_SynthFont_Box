@@ -1,26 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 ### FLUIDSYNTH
+import array
 import json
 from telnetlib import Telnet
 
+# Список инструментов
 with open('inst.JSON') as f:
-    piano = json.load(f)
+    instrument = json.load(f)
 
-tools = array('i',piano.inst)
-for i in tools:
-    print(i) 
-#print(templates)
+count_inst = len(piano["inst"])
+#print(piano["inst"][0]["name"])
+#print(len(piano["inst"]))
 
-#for section, commands in templates.items():
-#    print(section)
-#    print('\n'.join(commands))
-
-#for (i in piano.inst) {
-#    print(piano.inst[i].name)
-#}
-
-fs = Telnet("localhost",9800, 10)
+#fs = Telnet("localhost",9800, 10)
 #fs.write('noteon 1 25 127\n'.encode('ascii'))
 #time.sleep(1.0)
 #telnet.close()
@@ -52,22 +46,34 @@ def oled_count(count):
         draw.text((30, 40), count, fill="white")
     return oled_count
 
+def walker(step);
+    match step:
+        case "up":
+            count += 1
+        case "down":
+            count -= 1
+        if count > count_inst: count = 0
+        if count < 0: count = count_inst
+    return walker
+
 
 try:
     while True:                 # this will carry on until you hit CTRL+C
         if GPIO.input(29) == False:      # if pin 15 == 1
             print("29")
             count -= 1
-            oled_count(count)
+            walker("down")
+            oled_count(piano["inst"][count]["name"])
             sleep(0.5)
         if GPIO.input(31) == False:      # if pin 15 == 1
             print("31")
-            oled_count("-")
+            walker("up")
+            oled_count(piano["inst"][count]["name"])
             sleep(0.5)
         if GPIO.input(33) == False:      # if pin 15 == 1
             print ("33")
-            count += 1
-            oled_count(count)
+            oled_count("reverb")
+            
             sleep(0.5)
         sleep(0.10)              # wait 0.1 seconds
 
