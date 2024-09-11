@@ -10,7 +10,7 @@ from telnetlib import Telnet
 with open('inst.JSON') as f:
     instrument = json.load(f)
 
-count_inst = len(piano["inst"])
+count_inst = len(instrument["inst"])
 #print(piano["inst"][0]["name"])
 #print(len(piano["inst"]))
 
@@ -60,12 +60,12 @@ try:
             print("29")
             count -= 1
             walker("down")
-            oled_count(piano["inst"][count]["name"])
+            oled_count(instrument["inst"][count]["name"])
             sleep(0.5)
         if GPIO.input(31) == False:      # if pin 15 == 1
             print("31")
             walker("up")
-            oled_count(piano["inst"][count]["name"])
+            oled_count(instrument["inst"][count]["name"])
             sleep(0.5)
         if GPIO.input(33) == False:      # if pin 15 == 1
             print ("33")
