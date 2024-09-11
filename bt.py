@@ -47,6 +47,8 @@ def oled_count(count):
     return oled_count
 
 def walker(step):
+    global count
+    global count_inst
     if step == "up": count += 1
     if step == "down": count -= 1
     if count > count_inst: count = 0
@@ -70,7 +72,6 @@ try:
         if GPIO.input(33) == False:      # if pin 15 == 1
             print ("33")
             oled_count("reverb")
-            
             sleep(0.5)
         sleep(0.10)              # wait 0.1 seconds
 
