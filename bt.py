@@ -46,7 +46,7 @@ def oled_count(count):
         draw.text((30, 40), count, fill="white")
     return oled_count
 
-def walker(step);
+def walker(step):
     if step == "up": count += 1
     else: count -= 1
     if count > count_inst: count = 0
