@@ -10,7 +10,7 @@ from telnetlib import Telnet
 with open('inst.JSON') as f:
     instrument = json.load(f)
 
-count_inst = len(instrument["inst"])
+count_inst = (len(instrument["inst"])-1)
 #print(piano["inst"][0]["name"])
 #print(len(piano["inst"]))
 
@@ -39,11 +39,11 @@ GPIO.setup(33, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
 count = 0 #счетчик
 
-def oled_count(count):
+def oled_count(n_text):
     with canvas(device) as draw:
-        device.size = 15
+        #device.size = 15
         draw.rectangle(device.bounding_box, outline="white", fill="black")
-        draw.text((30, 40), count, fill="white")
+        draw.text((30, 40), n_text, fill="white")
     return oled_count
 
 def walker(step):
@@ -62,12 +62,12 @@ try:
             print("29")
             count -= 1
             walker("down")
-            oled_count(instrument["inst"][count]["name"])
+            oled_count(str(instrument["inst"][count]["name"]))
             sleep(0.5)
         if GPIO.input(31) == False:      # if pin 15 == 1
             print("31")
             walker("up")
-            oled_count(instrument["inst"][count]["name"])
+            oled_count(str(instrument["inst"][count]["name"]))
             sleep(0.5)
         if GPIO.input(33) == False:      # if pin 15 == 1
             print ("33")
