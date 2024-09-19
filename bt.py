@@ -14,7 +14,7 @@ count_inst = (len(instrument["inst"])-1)
 #print(piano["inst"][0]["name"])
 #print(len(piano["inst"]))
 
-#fs = Telnet("localhost",9800, 10)
+fs = Telnet("localhost",9800, 10)
 #fs.write('noteon 1 25 127\n'.encode('ascii'))
 #time.sleep(1.0)
 #telnet.close()
@@ -38,6 +38,7 @@ GPIO.setup(31, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 GPIO.setup(33, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
 count = 0 #счетчик
+bp = '' #bank and prog
 
 def oled_count(n_text):
     with canvas(device) as draw:
@@ -55,25 +56,27 @@ def walker(step):
     if count < 0: count = count_inst
     return walker
 
+oled_count('LOADING')
 
 try:
     while True:                 # this will carry on until you hit CTRL+C
-        if GPIO.input(29) == False:      # if pin 15 == 1
+        if GPIO.input(29) == False:      
             print("29")
-            count -= 1
             walker("down")
             oled_count(str(instrument["inst"][count]["name"]))
+            fs.write(" ".join(['select 2 1', instrument["inst"][count]["bank"], instrument["inst"][count]["prog"], '\n']).encode('ascii'))
             sleep(0.5)
-        if GPIO.input(31) == False:      # if pin 15 == 1
+        if GPIO.input(31) == False:      
             print("31")
             walker("up")
             oled_count(str(instrument["inst"][count]["name"]))
+            fs.write(" ".join(['select 2 1', instrument["inst"][count]["bank"], instrument["inst"][count]["prog"], '\n']).encode('ascii'))
             sleep(0.5)
-        if GPIO.input(33) == False:      # if pin 15 == 1
+        if GPIO.input(33) == False:      
             print ("33")
             oled_count("reverb")
             sleep(0.5)
-        sleep(0.10)              # wait 0.1 seconds
+        sleep(0.10)              
 
 finally:                        # this block will run no matter how the try block exits
     print("Finally")
